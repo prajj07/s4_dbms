@@ -1,0 +1,360 @@
+//Prajwal M
+//20220076
+
+mysql> CREATE DATABASE EMP_DETAILS;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> USE EMP_DETAILS;
+Database changed
+mysql> DROP DATABASE EMP_DETAILS;
+Query OK, 2 rows affected (0.32 sec)
+
+mysql> CREATE DATABASE EMP_DETAILS;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE EMP_DETAILS;
+Database changed
+mysql> CREATE TABLE DEPARTMENT(DNO INT PRIMARY KEY, DNAME VARCHAR(28) NOT NULL, D_HOD VARCHAR(28));
+Query OK, 0 rows affected (0.39 sec)
+
+mysql> DESC DEPARTMENT;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| DNO   | int(11)     | NO   | PRI | NULL    |       |
+| DNAME | varchar(28) | NO   |     | NULL    |       |
+| D_HOD | varchar(28) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE EMPLOYEE(ENO INT PRIMARY KEY, ENAME VARCHAR(28) NOT NULL, SALARY FLOAT NOT NULL, DNO INT, MNGRNO INT, DOJ DATE, JOB VARCHAR(28), ADDRESS VARCHAR(28), CITY VARCHAR(28), PINCODE INT, FOREIGN KEY (DNO) REFERENCES DEPARTMENT(DNO),CHECK(CITY='KOCHI' OR CITY='MUMBAI' OR CITY='CHENNAI'));
+Query OK, 0 rows affected (0.32 sec)
+
+mysql> DESC EMPLOYEE;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| ENO     | int(11)     | NO   | PRI | NULL    |       |
+| ENAME   | varchar(28) | NO   |     | NULL    |       |
+| SALARY  | float       | NO   |     | NULL    |       |
+| DNO     | int(11)     | YES  | MUL | NULL    |       |
+| MNGRNO  | int(11)     | YES  |     | NULL    |       |
+| DOJ     | date        | YES  |     | NULL    |       |
+| JOB     | varchar(28) | YES  |     | NULL    |       |
+| ADDRESS | varchar(28) | YES  |     | NULL    |       |
+| CITY    | varchar(28) | YES  |     | NULL    |       |
+| PINCODE | int(11)     | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> INSERT INTO DEPARTMENT VALUES(10,'Marketing','Kiran');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO DEPARTMENT VALUES(20,'Sales','Varun');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO DEPARTMENT VALUES(30,'Accounting','Karun');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO DEPARTMENT VALUES(40,'Management','Tarun');
+Query OK, 1 row affected (0.03 sec)
+
+mysql>  INSERT INTO EMPLOYEE(ENO,ENAME,SALARY,DNO,DOJ,JOB,ADDRESS,CITY,PINCODE) VALUES(001,'Rex',50000,40,'2005-1-19','SENIOR MANAGER','Address 1','KOCHI',682022);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++-----+-------+--------+------+--------+------------+----------------+-----------+-------+---------+
+| ENO | ENAME | SALARY | DNO  | MNGRNO | DOJ        | JOB            | ADDRESS   | CITY  | PINCODE |
++-----+-------+--------+------+--------+------------+----------------+-----------+-------+---------+
+|   1 | Rex   |  50000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER | Address 1 | KOCHI |  682022 |
++-----+-------+--------+------+--------+------------+----------------+-----------+-------+---------+
+1 row in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(002,'Tex',25000,10,001,'2005-1-19','MANAGER','Address 2','CHENNAI',682022);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(003,'Max',25000,30,001,'1998-1-19','MANAGER','Address 1','KOCHI',682022);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(004,'Lex',25000,20,001,'2000-1-19','MANAGER','Address 3','MUMBAI',682022);
+Query OK, 1 row affected (0.04 sec)
+
+mysql>  SELECT * FROM EMPLOYEE;
++-----+-------+--------+------+--------+------------+----------------+-----------+---------+---------+
+| ENO | ENAME | SALARY | DNO  | MNGRNO | DOJ        | JOB            | ADDRESS   | CITY    | PINCODE |
++-----+-------+--------+------+--------+------------+----------------+-----------+---------+---------+
+|   1 | Rex   |  50000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER | Address 1 | KOCHI   |  682022 |
+|   2 | Tex   |  25000 |   10 |      1 | 2005-01-19 | MANAGER        | Address 2 | CHENNAI |  682022 |
+|   3 | Max   |  25000 |   30 |      1 | 1998-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
+|   4 | Lex   |  25000 |   20 |      1 | 2000-01-19 | MANAGER        | Address 3 | MUMBAI  |  682022 |
++-----+-------+--------+------+--------+------------+----------------+-----------+---------+---------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET DNO=40 WHERE ENO=5;
+Query OK, 0 rows affected (0.02 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql>  SELECT * FROM EMPLOYEE;
++-----+-------+--------+------+--------+------------+----------------+-----------+---------+---------+
+| ENO | ENAME | SALARY | DNO  | MNGRNO | DOJ        | JOB            | ADDRESS   | CITY    | PINCODE |
++-----+-------+--------+------+--------+------------+----------------+-----------+---------+---------+
+|   1 | Rex   |  50000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER | Address 1 | KOCHI   |  682022 |
+|   2 | Tex   |  25000 |   10 |      1 | 2005-01-19 | MANAGER        | Address 2 | CHENNAI |  682022 |
+|   3 | Max   |  25000 |   30 |      1 | 1998-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
+|   4 | Lex   |  25000 |   20 |      1 | 2000-01-19 | MANAGER        | Address 3 | MUMBAI  |  682022 |
++-----+-------+--------+------+--------+------------+----------------+-----------+---------+---------+
+4 rows in set (0.01 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(008,'Ren',10000,10,002,'1996-1-19','WORKER','Address 2','CHENNAI',682022);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(013,'Jenson',8000,30,003,'1999-1-19','CLERK','Address 3','MUMBAI',682022);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(011,'Rohan',8000,20,004,'2007-1-19','WORKER','Address 1','KOCHI',682022);
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++-----+--------+--------+------+--------+------------+----------------+-----------+---------+---------+
+| ENO | ENAME  | SALARY | DNO  | MNGRNO | DOJ        | JOB            | ADDRESS   | CITY    | PINCODE |
++-----+--------+--------+------+--------+------------+----------------+-----------+---------+---------+
+|   1 | Rex    |  50000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER | Address 1 | KOCHI   |  682022 |
+|   2 | Tex    |  25000 |   10 |      1 | 2005-01-19 | MANAGER        | Address 2 | CHENNAI |  682022 |
+|   3 | Max    |  25000 |   30 |      1 | 1998-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
+|   4 | Lex    |  25000 |   20 |      1 | 2000-01-19 | MANAGER        | Address 3 | MUMBAI  |  682022 |
+|   8 | Ren    |  10000 |   10 |      2 | 1996-01-19 | WORKER         | Address 2 | CHENNAI |  682022 |
+|  11 | Rohan  |   8000 |   20 |      4 | 2007-01-19 | WORKER         | Address 1 | KOCHI   |  682022 |
+|  13 | Jenson |   8000 |   30 |      3 | 1999-01-19 | CLERK          | Address 3 | MUMBAI  |  682022 |
++-----+--------+--------+------+--------+------------+----------------+-----------+---------+---------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT ENAME AS NAME FROM EMPLOYEE WHERE DOJ>'1998-1-1' AND DNO=10;
++------+
+| NAME |
++------+
+| Tex  |
++------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT * FROM EMPLOYEE WHERE DNO<>30;
++-----+-------+--------+------+--------+------------+----------------+-----------+---------+---------+
+| ENO | ENAME | SALARY | DNO  | MNGRNO | DOJ        | JOB            | ADDRESS   | CITY    | PINCODE |
++-----+-------+--------+------+--------+------------+----------------+-----------+---------+---------+
+|   1 | Rex   |  50000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER | Address 1 | KOCHI   |  682022 |
+|   2 | Tex   |  25000 |   10 |      1 | 2005-01-19 | MANAGER        | Address 2 | CHENNAI |  682022 |
+|   4 | Lex   |  25000 |   20 |      1 | 2000-01-19 | MANAGER        | Address 3 | MUMBAI  |  682022 |
+|   8 | Ren   |  10000 |   10 |      2 | 1996-01-19 | WORKER         | Address 2 | CHENNAI |  682022 |
+|  11 | Rohan |   8000 |   20 |      4 | 2007-01-19 | WORKER         | Address 1 | KOCHI   |  682022 |
++-----+-------+--------+------+--------+------------+----------------+-----------+---------+---------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT ENAME AS NAME, D.DNAME AS DEPARTMENT FROM EMPLOYEE,DEPARTMENT D WHERE D.DNAME='SALES' AND EMPLOYEE.DNO=D.DNO;
++-------+------------+
+| NAME  | DEPARTMENT |
++-------+------------+
+| Lex   | Sales      |
+| Rohan | Sales      |
++-------+------------+
+2 rows in set (0.01 sec)
+
+mysql> SELECT ENAME AS NAME FROM EMPLOYEE WHERE MNGRNO IS NULL;
++------+
+| NAME |
++------+
+| Rex  |
++------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT * FROM EMPLOYEE WHERE ENAME LIKE 'J_n%';
++-----+--------+--------+------+--------+------------+-------+-----------+--------+---------+
+| ENO | ENAME  | SALARY | DNO  | MNGRNO | DOJ        | JOB   | ADDRESS   | CITY   | PINCODE |
++-----+--------+--------+------+--------+------------+-------+-----------+--------+---------+
+|  13 | Jenson |   8000 |   30 |      3 | 1999-01-19 | CLERK | Address 3 | MUMBAI |  682022 |
++-----+--------+--------+------+--------+------------+-------+-----------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql>  SELECT * FROM EMPLOYEE WHERE YEAR(DOJ) IN (2000);
++-----+-------+--------+------+--------+------------+---------+-----------+--------+---------+
+| ENO | ENAME | SALARY | DNO  | MNGRNO | DOJ        | JOB     | ADDRESS   | CITY   | PINCODE |
++-----+-------+--------+------+--------+------------+---------+-----------+--------+---------+
+|   4 | Lex   |  25000 |   20 |      1 | 2000-01-19 | MANAGER | Address 3 | MUMBAI |  682022 |
++-----+-------+--------+------+--------+------------+---------+-----------+--------+---------+
+1 row in set (0.01 sec)
+
+mysql> SELECT CONCAT('EVERY YEAR ',ENAME,' EARNS ',SALARY*12) AS ANNUAL_SALARY FROM EMPLOYEE;
++-------------------------------+
+| ANNUAL_SALARY                 |
++-------------------------------+
+| EVERY YEAR Rex EARNS 600000   |
+| EVERY YEAR Tex EARNS 300000   |
+| EVERY YEAR Max EARNS 300000   |
+| EVERY YEAR Lex EARNS 300000   |
+| EVERY YEAR Ren EARNS 120000   |
+| EVERY YEAR Rohan EARNS 96000  |
+| EVERY YEAR Jenson EARNS 96000 |
++-------------------------------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT COUNT(ENO) AS TOTAL_NO_OF_EMPLOYEE FROM EMPLOYEE;
++----------------------+
+| TOTAL_NO_OF_EMPLOYEE |
++----------------------+
+|                    7 |
++----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(SALARY) AS MINIMUM_SALARY, JOB FROM EMPLOYEE GROUP BY JOB;
++----------------+----------------+
+| MINIMUM_SALARY | JOB            |
++----------------+----------------+
+|           8000 | CLERK          |
+|          25000 | MANAGER        |
+|          50000 | SENIOR MANAGER |
+|           8000 | WORKER         |
++----------------+----------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT MIN(SALARY) AS MINIMUM_SALARY,JOB,DEPARTMENT.DNAME AS DEPARTMENT FROM EMPLOYEE,DEPARTMENT WHERE SALARY>7000 AND EMPLOYEE.DNO=DEPARTMENT.DNO GROUP BY DEPARTMENT.DNAME,JOB;
++----------------+----------------+------------+
+| MINIMUM_SALARY | JOB            | DEPARTMENT |
++----------------+----------------+------------+
+|           8000 | CLERK          | Accounting |
+|          25000 | MANAGER        | Accounting |
+|          50000 | SENIOR MANAGER | Management |
+|          25000 | MANAGER        | Marketing  |
+|          10000 | WORKER         | Marketing  |
+|          25000 | MANAGER        | Sales      |
+|           8000 | WORKER         | Sales      |
++----------------+----------------+------------+
+7 rows in set (0.00 sec)
+
+mysql>  SELECT MIN(E.SALARY) AS MINIMUM_SALARY,D.DNAME AS DEPARTMENT FROM EMPLOYEE E,DEPARTMENT D  WHERE E.JOB='MANAGER' AND E.DNO=D.DNO GROUP BY D.DNAME;
++----------------+------------+
+| MINIMUM_SALARY | DEPARTMENT |
++----------------+------------+
+|          25000 | Accounting |
+|          25000 | Marketing  |
+|          25000 | Sales      |
++----------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> INSERT INTO EMPLOYEE VALUES(020,'Rajubhai',15000,20,001,'2006-1-19','MANAGER','Address 1','KOCHI',682022);
+Query OK, 1 row affected (0.04 sec)
+
+mysql>  SELECT MIN(E.SALARY) AS MINIMUM_SALARY,D.DNAME AS DEPARTMENT FROM EMPLOYEE E,DEPARTMENT D  WHERE E.JOB='MANAGER' AND E.DNO=D.DNO GROUP BY D.DNAME;
++----------------+------------+
+| MINIMUM_SALARY | DEPARTMENT |
++----------------+------------+
+|          25000 | Accounting |
+|          25000 | Marketing  |
+|          15000 | Sales      |
++----------------+------------+
+3 rows in set (0.00 sec)
+
+mysql>  SELECT ENAME AS NAME,DEPARTMENT.DNAME AS DEPATMENT FROM EMPLOYEE,DEPARTMENT WHERE JOB='CLERK'AND EMPLOYEE.DNO=DEPARTMENT.DNO;
++--------+------------+
+| NAME   | DEPATMENT  |
++--------+------------+
+| Jenson | Accounting |
++--------+------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT ENAME AS NAME,DATE_FORMAT(DOJ,'%d/%m/%y') AS DATE_OF_JOINING FROM EMPLOYEE;
++----------+-----------------+
+| NAME     | DATE_OF_JOINING |
++----------+-----------------+
+| Rex      | 19/01/05        |
+| Tex      | 19/01/05        |
+| Max      | 19/01/98        |
+| Lex      | 19/01/00        |
+| Ren      | 19/01/96        |
+| Rohan    | 19/01/07        |
+| Jenson   | 19/01/99        |
+| Rajubhai | 19/01/06        |
++----------+-----------------+
+8 rows in set (0.00 sec)
+
+mysql>  UPDATE EMPLOYEE SET SALARY=1.2*SALARY;
+Query OK, 8 rows affected (0.04 sec)
+Rows matched: 8  Changed: 8  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE;
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+| ENO | ENAME    | SALARY | DNO  | MNGRNO | DOJ        | JOB            | ADDRESS   | CITY    | PINCODE |
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+|   1 | Rex      |  60000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER | Address 1 | KOCHI   |  682022 |
+|   2 | Tex      |  30000 |   10 |      1 | 2005-01-19 | MANAGER        | Address 2 | CHENNAI |  682022 |
+|   3 | Max      |  30000 |   30 |      1 | 1998-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
+|   4 | Lex      |  30000 |   20 |      1 | 2000-01-19 | MANAGER        | Address 3 | MUMBAI  |  682022 |
+|   8 | Ren      |  12000 |   10 |      2 | 1996-01-19 | WORKER         | Address 2 | CHENNAI |  682022 |
+|  11 | Rohan    |   9600 |   20 |      4 | 2007-01-19 | WORKER         | Address 1 | KOCHI   |  682022 |
+|  13 | Jenson   |   9600 |   30 |      3 | 1999-01-19 | CLERK          | Address 3 | MUMBAI  |  682022 |
+|  20 | Rajubhai |  18000 |   20 |      1 | 2006-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+8 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET SALARY=10000 WHERE SALARY<7000;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE;
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+| ENO | ENAME    | SALARY | DNO  | MNGRNO | DOJ        | JOB            | ADDRESS   | CITY    | PINCODE |
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+|   1 | Rex      |  60000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER | Address 1 | KOCHI   |  682022 |
+|   2 | Tex      |  30000 |   10 |      1 | 2005-01-19 | MANAGER        | Address 2 | CHENNAI |  682022 |
+|   3 | Max      |  30000 |   30 |      1 | 1998-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
+|   4 | Lex      |  30000 |   20 |      1 | 2000-01-19 | MANAGER        | Address 3 | MUMBAI  |  682022 |
+|   8 | Ren      |  12000 |   10 |      2 | 1996-01-19 | WORKER         | Address 2 | CHENNAI |  682022 |
+|  11 | Rohan    |   9600 |   20 |      4 | 2007-01-19 | WORKER         | Address 1 | KOCHI   |  682022 |
+|  13 | Jenson   |   9600 |   30 |      3 | 1999-01-19 | CLERK          | Address 3 | MUMBAI  |  682022 |
+|  20 | Rajubhai |  18000 |   20 |      1 | 2006-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+8 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET JOB="SENIOR CLERK" WHERE SALARY=10000;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql>  SELECT * FROM EMPLOYEE;
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+| ENO | ENAME    | SALARY | DNO  | MNGRNO | DOJ        | JOB            | ADDRESS   | CITY    | PINCODE |
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+|   1 | Rex      |  60000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER | Address 1 | KOCHI   |  682022 |
+|   2 | Tex      |  30000 |   10 |      1 | 2005-01-19 | MANAGER        | Address 2 | CHENNAI |  682022 |
+|   3 | Max      |  30000 |   30 |      1 | 1998-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
+|   4 | Lex      |  30000 |   20 |      1 | 2000-01-19 | MANAGER        | Address 3 | MUMBAI  |  682022 |
+|   8 | Ren      |  12000 |   10 |      2 | 1996-01-19 | WORKER         | Address 2 | CHENNAI |  682022 |
+|  11 | Rohan    |   9600 |   20 |      4 | 2007-01-19 | WORKER         | Address 1 | KOCHI   |  682022 |
+|  13 | Jenson   |   9600 |   30 |      3 | 1999-01-19 | CLERK          | Address 3 | MUMBAI  |  682022 |
+|  20 | Rajubhai |  18000 |   20 |      1 | 2006-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+8 rows in set (0.00 sec)
+
+mysql> DELETE FROM EMPLOYEE WHERE JOB='WORKER' AND DNO=(SELECT DNO FROM DEPARTMENT WHERE DNAME='SALES');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT * FROM EMPLOYEE WHERE DNO=20;
++-----+----------+--------+------+--------+------------+---------+-----------+--------+---------+
+| ENO | ENAME    | SALARY | DNO  | MNGRNO | DOJ        | JOB     | ADDRESS   | CITY   | PINCODE |
++-----+----------+--------+------+--------+------------+---------+-----------+--------+---------+
+|   4 | Lex      |  30000 |   20 |      1 | 2000-01-19 | MANAGER | Address 3 | MUMBAI |  682022 |
+|  20 | Rajubhai |  18000 |   20 |      1 | 2006-01-19 | MANAGER | Address 1 | KOCHI  |  682022 |
++-----+----------+--------+------+--------+------------+---------+-----------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM EMPLOYEE;
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+| ENO | ENAME    | SALARY | DNO  | MNGRNO | DOJ        | JOB            | ADDRESS   | CITY    | PINCODE |
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+|   1 | Rex      |  60000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER | Address 1 | KOCHI   |  682022 |
+|   2 | Tex      |  30000 |   10 |      1 | 2005-01-19 | MANAGER        | Address 2 | CHENNAI |  682022 |
+|   3 | Max      |  30000 |   30 |      1 | 1998-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
+|   4 | Lex      |  30000 |   20 |      1 | 2000-01-19 | MANAGER        | Address 3 | MUMBAI  |  682022 |
+|   8 | Ren      |  12000 |   10 |      2 | 1996-01-19 | WORKER         | Address 2 | CHENNAI |  682022 |
+|  13 | Jenson   |   9600 |   30 |      3 | 1999-01-19 | CLERK          | Address 3 | MUMBAI  |  682022 |
+|  20 | Rajubhai |  18000 |   20 |      1 | 2006-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+7 rows in set (0.00 sec)
+
+mysql> 

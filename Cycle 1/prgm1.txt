@@ -1,0 +1,155 @@
+
+//Prajwal M
+//20220076
+
+mysql> CREATE DATABASE STUDENT;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE STUDENT;
+Database changed
+mysql> SHOW TABLES;
+Empty set (0.00 sec)
+
+mysql> CREATE TABLE STUDENT(rollno INT PRIMARY KEY, name VARCHAR(28), age INT, branch VARCHAR(28));
+Query OK, 0 rows affected (0.27 sec)
+
+mysql> DESC STUDENT;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| rollno | int(11)     | NO   | PRI | NULL    |       |
+| name   | varchar(28) | YES  |     | NULL    |       |
+| age    | int(11)     | YES  |     | NULL    |       |
+| branch | varchar(28) | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> INSERT INTO STUDENT VALUES(1,'Gokul',19,'CS');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> INSERT INTO STUDENT VALUES(2,'Rahul',21,'CE');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO STUDENT VALUES(3,'Jeevan',20,'CS');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> INSERT INTO STUDENT VALUES(4,'Joe',22,'MECH');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> SELECT * FROM STUDENT;
++--------+--------+------+--------+
+| rollno | name   | age  | branch |
++--------+--------+------+--------+
+|      1 | Gokul  |   19 | CS     |
+|      2 | Rahul  |   21 | CE     |
+|      3 | Jeevan |   20 | CS     |
+|      4 | Joe    |   22 | MECH   |
++--------+--------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENT ADD COLUMN TOTAL_MARKS INT;
+Query OK, 0 rows affected (0.57 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE STUDENT SET TOTAL_MARKS=40 WHERE rollno=1;
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE STUDENT SET TOTAL_MARKS=59 WHERE rollno=2;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE STUDENT SET TOTAL_MARKS=45 WHERE rollno=3;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE STUDENT SET TOTAL_MARKS=50 WHERE rollno=4;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++--------+--------+------+--------+-------------+
+| rollno | name   | age  | branch | TOTAL_MARKS |
++--------+--------+------+--------+-------------+
+|      1 | Gokul  |   19 | CS     |          40 |
+|      2 | Rahul  |   21 | CE     |          59 |
+|      3 | Jeevan |   20 | CS     |          45 |
+|      4 | Joe    |   22 | MECH   |          50 |
++--------+--------+------+--------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> ALTER TABLE STUDENT CHANGE COLUMN name STUDENT_NAME VARCHAR(28);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE STUDENT CHANGE COLUMN rollno STUDENT_ROLLNO INT;
+Query OK, 0 rows affected (0.09 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM STUDENT;
++----------------+--------------+------+--------+-------------+
+| STUDENT_ROLLNO | STUDENT_NAME | age  | branch | TOTAL_MARKS |
++----------------+--------------+------+--------+-------------+
+|              1 | Gokul        |   19 | CS     |          40 |
+|              2 | Rahul        |   21 | CE     |          59 |
+|              3 | Jeevan       |   20 | CS     |          45 |
+|              4 | Joe          |   22 | MECH   |          50 |
++----------------+--------------+------+--------+-------------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT WHERE branch='CS';
++----------------+--------------+------+--------+-------------+
+| STUDENT_ROLLNO | STUDENT_NAME | age  | branch | TOTAL_MARKS |
++----------------+--------------+------+--------+-------------+
+|              1 | Gokul        |   19 | CS     |          40 |
+|              3 | Jeevan       |   20 | CS     |          45 |
++----------------+--------------+------+--------+-------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT MAX(TOTAL_MARKS) AS MAXIMUM_MARK FROM STUDENT;
++--------------+
+| MAXIMUM_MARK |
++--------------+
+|           59 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(TOTAL_MARKS) AS MINIMUM_MARKS FROM STUDENT;
++---------------+
+| MINIMUM_MARKS |
++---------------+
+|            40 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT AVG(TOTAL_MARKS) AS AVERAGE_MARKS FROM STUDENT;
++---------------+
+| AVERAGE_MARKS |
++---------------+
+|       48.5000 |
++---------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MAX(TOTAL_MARKS) AS MAXIMUM_MARK,MIN(TOTAL_MARKS) AS MINIMUM_MARK,AVG(TOTAL_MARKS) AS AVERAGE_MARK FROM STUDENT;
++--------------+--------------+--------------+
+| MAXIMUM_MARK | MINIMUM_MARK | AVERAGE_MARK |
++--------------+--------------+--------------+
+|           59 |           40 |      48.5000 |
++--------------+--------------+--------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT WHERE TOTAL_MARKS=(SELECT MAX(TOTAL_MARKS) FROM STUDENT);
++----------------+--------------+------+--------+-------------+
+| STUDENT_ROLLNO | STUDENT_NAME | age  | branch | TOTAL_MARKS |
++----------------+--------------+------+--------+-------------+
+|              2 | Rahul        |   21 | CE     |          59 |
++----------------+--------------+------+--------+-------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM STUDENT WHERE TOTAL_MARKS=(SELECT MIN(TOTAL_MARKS) FROM STUDENT);
++----------------+--------------+------+--------+-------------+
+| STUDENT_ROLLNO | STUDENT_NAME | age  | branch | TOTAL_MARKS |
++----------------+--------------+------+--------+-------------+
+|              1 | Gokul        |   19 | CS     |          40 |
++----------------+--------------+------+--------+-------------+
+1 row in set (0.00 sec)

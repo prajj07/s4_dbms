@@ -1,0 +1,105 @@
+//Prajwal M
+//20220076
+
+
+mysql> CREATE DATABASE STATE;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> USE STATE;
+Database changed
+
+mysql> CREATE TABLE KERALA(NAME VARCHAR(25) PRIMARY KEY, LITERACY INT, POPULATION FLOAT, AREA FLOAT);
+Query OK, 0 rows affected (0.29 sec)
+
+mysql> CREATE TABLE TAMILNADU(NAME VARCHAR(25) PRIMARY KEY, LITERACY INT, POPULATION FLOAT, AREA FLOAT);
+Query OK, 0 rows affected (0.29 sec)
+
+
+mysql> INSERT INTO KERALA VALUES('KASARAGOD',90,9202999,309),('ERNAKULAM',97,1099882,306),('KANNUR',89,998889,289),('PALAKAD',87,2322321,321),('KOLLAM',88,889873,172);
+Query OK, 5 rows affected (0.05 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+mysql> SELECT * FROM KERALA;
++-----------+----------+------------+------+
+| NAME      | LITERACY | POPULATION | AREA |
++-----------+----------+------------+------+
+| ERNAKULAM |       97 |    1099880 |  306 |
+| KANNUR    |       89 |     998889 |  289 |
+| KASARAGOD |       90 |    9203000 |  309 |
+| KOLLAM    |       88 |     889873 |  172 |
+| PALAKAD   |       87 |    2322320 |  321 |
++-----------+----------+------------+------+
+5 rows in set (0.01 sec)
+
+
+
+mysql> INSERT INTO TAMILNADU VALUES('CHENNAI',90,9202779,328),('TRICHI',97,1077882,301),('MADURAI',89,977889,389),('OOTY',87,32321,121),('SELAM',88,832873,178);
+Query OK, 5 rows affected (0.04 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM TAMILNADU;
++---------+----------+------------+------+
+| NAME    | LITERACY | POPULATION | AREA |
++---------+----------+------------+------+
+| CHENNAI |       90 |    9202780 |  328 |
+| MADURAI |       89 |     977889 |  389 |
+| OOTY    |       87 |      32321 |  121 |
+| SELAM   |       88 |     832873 |  178 |
+| TRICHI  |       97 |    1077880 |  301 |
++---------+----------+------------+------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> SELECT * FROM KERALA WHERE LITERACY IN (SELECT LITERACY FROM TAMILNADU);
++-----------+----------+------------+------+
+| NAME      | LITERACY | POPULATION | AREA |
++-----------+----------+------------+------+
+| ERNAKULAM |       97 |    1099880 |  306 |
+| KANNUR    |       89 |     998889 |  289 |
+| KASARAGOD |       90 |    9203000 |  309 |
+| KOLLAM    |       88 |     889873 |  172 |
+| PALAKAD   |       87 |    2322320 |  321 |
++-----------+----------+------------+------+
+5 rows in set (0.00 sec)
+
+
+
+mysql> SELECT NAME FROM KERALA UNION SELECT NAME FROM TAMILNADU;
++-----------+
+| NAME      |
++-----------+
+| ERNAKULAM |
+| KANNUR    |
+| KASARAGOD |
+| KOLLAM    |
+| PALAKAD   |
+| CHENNAI   |
+| MADURAI   |
+| OOTY      |
+| SELAM     |
+| TRICHI    |
++-----------+
+10 rows in set (0.00 sec)
+
+mysql> UPDATE KERALA SET LITERACY=100 WHERE NAME='KANNUR';
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+
+mysql> SELECT DISTINCT(LITERACY) FROM KERALA WHERE LITERACY NOT IN (SELECT LITERACY FROM TAMILNADU);
++----------+
+| LITERACY |
++----------+
+|      100 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> SELECT DISTINCT(LITERACY) FROM TAMILNADU WHERE LITERACY NOT IN (SELECT LITERACY FROM KERALA);
++----------+
+| LITERACY |
++----------+
+|       89 |
++----------+
+1 row in set (0.00 sec)

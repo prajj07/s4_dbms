@@ -1,0 +1,181 @@
+//Prajwal M
+//20220076
+
+
+mysql> USE EMP_DETAILS;
+Reading table information for completion of table and column names
+You can turn off this feature to get a quicker startup with -A
+
+Database changed
+mysql> SHOW TABLES;
++-----------------------+
+| Tables_in_EMP_DETAILS |
++-----------------------+
+| DEPARTMENT            |
+| EMPLOYEE              |
++-----------------------+
+2 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE;
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+| ENO | ENAME    | SALARY | DNO  | MNGRNO | DOJ        | JOB            | ADDRESS   | CITY    | PINCODE |
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+|   1 | Rex      |  60000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER | Address 1 | KOCHI   |  682022 |
+|   2 | Tex      |  30000 |   10 |      1 | 2005-01-19 | MANAGER        | Address 2 | CHENNAI |  682022 |
+|   3 | Max      |  30000 |   30 |      1 | 1998-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
+|   4 | Lex      |  30000 |   20 |      1 | 2000-01-19 | MANAGER        | Address 3 | MUMBAI  |  682022 |
+|   8 | Ren      |  12000 |   10 |      2 | 1996-01-19 | WORKER         | Address 2 | CHENNAI |  682022 |
+|  13 | Jenson   |   9600 |   30 |      3 | 1999-01-19 | CLERK          | Address 3 | MUMBAI  |  682022 |
+|  20 | Rajubhai |  18000 |   20 |      1 | 2006-01-19 | MANAGER        | Address 1 | KOCHI   |  682022 |
++-----+----------+--------+------+--------+------------+----------------+-----------+---------+---------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM DEPARTMENT;
++-----+------------+-------+
+| DNO | DNAME      | D_HOD |
++-----+------------+-------+
+|  10 | Marketing  | Kiran |
+|  20 | Sales      | Varun |
+|  30 | Accounting | Karun |
+|  40 | Management | Tarun |
++-----+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE DEPARTMENT SET D_HOD='Tex' WHERE DNO=10;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE DEPARTMENT SET D_HOD='Lex' WHERE DNO=20;
+Query OK, 1 row affected (0.04 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE DEPARTMENT SET D_HOD='Max' WHERE DNO=30;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> 
+mysql> UPDATE DEPARTMENT SET D_HOD='Rex' WHERE DNO=40;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM DEPARTMENT;
++-----+------------+-------+
+| DNO | DNAME      | D_HOD |
++-----+------------+-------+
+|  10 | Marketing  | Tex   |
+|  20 | Sales      | Lex   |
+|  30 | Accounting | Max   |
+|  40 | Management | Rex   |
++-----+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> UPDATE EMPLOYEE SET JOB='PROFESSOR' WHERE ENO=2;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET JOB='ASSOCIATE PROFESSOR' WHERE ENO=3;
+Query OK, 1 row affected (0.03 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql>  UPDATE EMPLOYEE SET JOB='ASSISTANT PROFESSOR' WHERE ENO=4;
+Query OK, 1 row affected (0.05 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE EMPLOYEE SET JOB='GUEST LECTURER' WHERE ENO=5;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 0  Changed: 0  Warnings: 0
+
+mysql> SELECT * FROM EMPLOYEE;
++-----+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+
+| ENO | ENAME    | SALARY | DNO  | MNGRNO | DOJ        | JOB                 | ADDRESS   | CITY    | PINCODE |
++-----+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+
+|   1 | Rex      |  60000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER      | Address 1 | KOCHI   |  682022 |
+|   2 | Tex      |  30000 |   10 |      1 | 2005-01-19 | PROFESSOR           | Address 2 | CHENNAI |  682022 |
+|   3 | Max      |  30000 |   30 |      1 | 1998-01-19 | ASSOCIATE PROFESSOR | Address 1 | KOCHI   |  682022 |
+|   4 | Lex      |  30000 |   20 |      1 | 2000-01-19 | ASSISTANT PROFESSOR | Address 3 | MUMBAI  |  682022 |
+|   8 | Ren      |  12000 |   10 |      2 | 1996-01-19 | WORKER              | Address 2 | CHENNAI |  682022 |
+|  13 | Jenson   |   9600 |   30 |      3 | 1999-01-19 | CLERK               | Address 3 | MUMBAI  |  682022 |
+|  20 | Rajubhai |  18000 |   20 |      1 | 2006-01-19 | MANAGER             | Address 1 | KOCHI   |  682022 |
++-----+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+
+7 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM DEPARTMENT;
++-----+------------+-------+
+| DNO | DNAME      | D_HOD |
++-----+------------+-------+
+|  10 | Marketing  | Tex   |
+|  20 | Sales      | Lex   |
+|  30 | Accounting | Max   |
+|  40 | Management | Rex   |
++-----+------------+-------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT ENAME AS NAME,JOB AS DESIGNATION,DNAME AS DEPARTMENT FROM EMPLOYEE,DEPARTMENT WHERE ENAME=D_HOD;
++------+---------------------+------------+
+| NAME | DESIGNATION         | DEPARTMENT |
++------+---------------------+------------+
+| Rex  | SENIOR MANAGER      | Management |
+| Tex  | PROFESSOR           | Marketing  |
+| Max  | ASSOCIATE PROFESSOR | Accounting |
+| Lex  | ASSISTANT PROFESSOR | Sales      |
++------+---------------------+------------+
+4 rows in set (0.01 sec)
+
+mysql> INSERT INTO DEPARTMENT VALUES(50,'Human Resource','John');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> SELECT * FROM DEPARTMENT;
++-----+----------------+-------+
+| DNO | DNAME          | D_HOD |
++-----+----------------+-------+
+|  10 | Marketing      | Tex   |
+|  20 | Sales          | Lex   |
+|  30 | Accounting     | Max   |
+|  40 | Management     | Rex   |
+|  50 | Human Resource | John  |
++-----+----------------+-------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE LEFT OUTER JOIN DEPARTMENT ON EMPLOYEE.DNO=DEPARTMENT.DNO;
++-----+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+------+------------+-------+
+| ENO | ENAME    | SALARY | DNO  | MNGRNO | DOJ        | JOB                 | ADDRESS   | CITY    | PINCODE | DNO  | DNAME      | D_HOD |
++-----+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+------+------------+-------+
+|   2 | Tex      |  30000 |   10 |      1 | 2005-01-19 | PROFESSOR           | Address 2 | CHENNAI |  682022 |   10 | Marketing  | Tex   |
+|   8 | Ren      |  12000 |   10 |      2 | 1996-01-19 | WORKER              | Address 2 | CHENNAI |  682022 |   10 | Marketing  | Tex   |
+|   4 | Lex      |  30000 |   20 |      1 | 2000-01-19 | ASSISTANT PROFESSOR | Address 3 | MUMBAI  |  682022 |   20 | Sales      | Lex   |
+|  20 | Rajubhai |  18000 |   20 |      1 | 2006-01-19 | MANAGER             | Address 1 | KOCHI   |  682022 |   20 | Sales      | Lex   |
+|   3 | Max      |  30000 |   30 |      1 | 1998-01-19 | ASSOCIATE PROFESSOR | Address 1 | KOCHI   |  682022 |   30 | Accounting | Max   |
+|  13 | Jenson   |   9600 |   30 |      3 | 1999-01-19 | CLERK               | Address 3 | MUMBAI  |  682022 |   30 | Accounting | Max   |
+|   1 | Rex      |  60000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER      | Address 1 | KOCHI   |  682022 |   40 | Management | Rex   |
++-----+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+------+------------+-------+
+7 rows in set (0.00 sec)
+
+mysql> SELECT * FROM EMPLOYEE RIGHT OUTER JOIN DEPARTMENT ON EMPLOYEE.DNO=DEPARTMENT.DNO;
++------+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+-----+----------------+-------+
+| ENO  | ENAME    | SALARY | DNO  | MNGRNO | DOJ        | JOB                 | ADDRESS   | CITY    | PINCODE | DNO | DNAME          | D_HOD |
++------+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+-----+----------------+-------+
+|    1 | Rex      |  60000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER      | Address 1 | KOCHI   |  682022 |  40 | Management     | Rex   |
+|    2 | Tex      |  30000 |   10 |      1 | 2005-01-19 | PROFESSOR           | Address 2 | CHENNAI |  682022 |  10 | Marketing      | Tex   |
+|    3 | Max      |  30000 |   30 |      1 | 1998-01-19 | ASSOCIATE PROFESSOR | Address 1 | KOCHI   |  682022 |  30 | Accounting     | Max   |
+|    4 | Lex      |  30000 |   20 |      1 | 2000-01-19 | ASSISTANT PROFESSOR | Address 3 | MUMBAI  |  682022 |  20 | Sales          | Lex   |
+|    8 | Ren      |  12000 |   10 |      2 | 1996-01-19 | WORKER              | Address 2 | CHENNAI |  682022 |  10 | Marketing      | Tex   |
+|   13 | Jenson   |   9600 |   30 |      3 | 1999-01-19 | CLERK               | Address 3 | MUMBAI  |  682022 |  30 | Accounting     | Max   |
+|   20 | Rajubhai |  18000 |   20 |      1 | 2006-01-19 | MANAGER             | Address 1 | KOCHI   |  682022 |  20 | Sales          | Lex   |
+| NULL | NULL     |   NULL | NULL |   NULL | NULL       | NULL                | NULL      | NULL    |    NULL |  50 | Human Resource | John  |
++------+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+-----+----------------+-------+
+8 rows in set (0.00 sec)
+
+mysql>  SELECT * FROM EMPLOYEE LEFT OUTER JOIN DEPARTMENT ON EMPLOYEE.DNO=DEPARTMENT.DNO UNION SELECT * FROM EMPLOYEE RIGHT OUTER JOIN DEPARTMENT ON EMPLOYEE.DNO=DEPARTMENT.DNO;
++------+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+------+----------------+-------+
+| ENO  | ENAME    | SALARY | DNO  | MNGRNO | DOJ        | JOB                 | ADDRESS   | CITY    | PINCODE | DNO  | DNAME          | D_HOD |
++------+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+------+----------------+-------+
+|    2 | Tex      |  30000 |   10 |      1 | 2005-01-19 | PROFESSOR           | Address 2 | CHENNAI |  682022 |   10 | Marketing      | Tex   |
+|    8 | Ren      |  12000 |   10 |      2 | 1996-01-19 | WORKER              | Address 2 | CHENNAI |  682022 |   10 | Marketing      | Tex   |
+|    4 | Lex      |  30000 |   20 |      1 | 2000-01-19 | ASSISTANT PROFESSOR | Address 3 | MUMBAI  |  682022 |   20 | Sales          | Lex   |
+|   20 | Rajubhai |  18000 |   20 |      1 | 2006-01-19 | MANAGER             | Address 1 | KOCHI   |  682022 |   20 | Sales          | Lex   |
+|    3 | Max      |  30000 |   30 |      1 | 1998-01-19 | ASSOCIATE PROFESSOR | Address 1 | KOCHI   |  682022 |   30 | Accounting     | Max   |
+|   13 | Jenson   |   9600 |   30 |      3 | 1999-01-19 | CLERK               | Address 3 | MUMBAI  |  682022 |   30 | Accounting     | Max   |
+|    1 | Rex      |  60000 |   40 |   NULL | 2005-01-19 | SENIOR MANAGER      | Address 1 | KOCHI   |  682022 |   40 | Management     | Rex   |
+| NULL | NULL     |   NULL | NULL |   NULL | NULL       | NULL                | NULL      | NULL    |    NULL |   50 | Human Resource | John  |
++------+----------+--------+------+--------+------------+---------------------+-----------+---------+---------+------+----------------+-------+
+8 rows in set (0.00 sec)
